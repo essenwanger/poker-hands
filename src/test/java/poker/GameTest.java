@@ -12,86 +12,49 @@ import org.junit.jupiter.api.Test;
 class GameTest {
 	
 	@Test
-	void test1() {
-		Game game = new Game();
+	void jugadorBlancoSuCartaMayorEs9C() {
+		String[] cartasBlanco=new String[]{"2H","3D","5S","9C","4D"};
+		String[] cartasNegro=new String[]{"2C","3H","4S","8C","AH"};
 		
-		game.repartirCartas(cartasJugadorBlancoCartaAlta9(), cartasJugadorNegroCartaAltaJack());
-		
-		assertEquals(5, game.cantidadCartasJugadorBlanco());
-		assertEquals(5, game.cantidadCartasJugadorNegro());
+		Game game = new Game(cartasBlanco, cartasNegro);
+		assertEquals("9C", game.cartaMayorJugadorBlanco());
 	}
 	
 	@Test
-	void test5() {
-		Game game = new Game();
+	void jugadorNegroSuCartaMayorEsAH() {
+		String[] cartasBlanco=new String[]{"2H","3D","5S","9C","4D"};
+		String[] cartasNegro=new String[]{"2C","3H","4S","8C","AH"};
 		
-		game.repartirCartas(cartasJugadorBlancoCartaAlta9(), cartasJugadorNegroCartaAltaJack());
-		
-		assertEquals(9, game.cartaMayorJugadorBlanco());
+		Game game = new Game(cartasBlanco, cartasNegro);
+		assertEquals("AH", game.cartaMayorJugadorNegro());
 	}
 	
 	@Test
-	void test2() {
-		Game game = new Game();
+	void jugadorNegroGanaCartaMayorAH() {
+		String[] cartasBlanco=new String[]{"2H","3D","5S","9C","4D"};
+		String[] cartasNegro=new String[]{"2C","3H","4S","8C","AH"};
 		
-		game.repartirCartas(cartasJugadorBlancoCartaAlta9(), cartasJugadorNegroCartaAltaJack());
-		
-		assertFalse(game.jugadorBlancoGana());
-		assertTrue(game.jugadorNegroGana());
-	}
-	
-	private List<String> cartasJugadorBlancoCartaAlta9(){
-		List<String> cartasBlanco = new ArrayList<String>();
-		cartasBlanco.add("3H");
-		cartasBlanco.add("5S");
-		cartasBlanco.add("9D");
-		cartasBlanco.add("7H");
-		cartasBlanco.add("4H");
-		
-		return cartasBlanco;
-	}
-	
-	private List<String> cartasJugadorNegroCartaAltaJack(){
-		List<String> cartasNegro = new ArrayList<String>();
-		cartasNegro.add("4H");
-		cartasNegro.add("6S");
-		cartasNegro.add("3D");
-		cartasNegro.add("JD");
-		cartasNegro.add("8H");
-		
-		return cartasNegro;
+		Game game = new Game(cartasBlanco, cartasNegro);
+		assertEquals("Black wins. - with high card: Ace", game.ganador());
 	}
 	
 	@Test
-	void test3() {
-		Game game = new Game();
+	void jugadorBlancoGanaCartaMayorKC() {
+		String[] cartasBlanco=new String[]{"2H","3D","5S","KC","4D"};
+		String[] cartasNegro=new String[]{"2C","3H","4S","8C","7H"};
 		
-		game.repartirCartas(cartasJugadorBlancoCartaAltaQueen(), cartasJugadorNegroCartaAlta5());
-		
-		assertTrue(game.jugadorBlancoGana());
-		assertFalse(game.jugadorNegroGana());
-	}
-
-	private List<String> cartasJugadorBlancoCartaAltaQueen(){
-		List<String> cartasBlanco = new ArrayList<String>();
-		cartasBlanco.add("3H");
-		cartasBlanco.add("5S");
-		cartasBlanco.add("9D");
-		cartasBlanco.add("JH");
-		cartasBlanco.add("QH");
-		
-		return cartasBlanco;
+		Game game = new Game(cartasBlanco, cartasNegro);
+		assertEquals("White wins. - with high card: King", game.ganador());
 	}
 	
-	private List<String> cartasJugadorNegroCartaAlta5(){
-		List<String> cartasNegro = new ArrayList<String>();
-		cartasNegro.add("4H");
-		cartasNegro.add("4S");
-		cartasNegro.add("3D");
-		cartasNegro.add("2D");
-		cartasNegro.add("5H");
+	@Test
+	void empateCartaMayor() {
+		String[] cartasBlanco=new String[]{"2H","3D","5S","KC","4D"};
+		String[] cartasNegro=new String[]{"2C","3H","4S","8C","KH"};
 		
-		return cartasNegro;
+		Game game = new Game(cartasBlanco, cartasNegro);
+		assertEquals("Tie.", game.ganador());
 	}
+	
 	
 }
